@@ -3284,6 +3284,12 @@
 
 - (void)setUserTrackingMode:(RMUserTrackingMode)mode animated:(BOOL)animated
 {
+    [self setUserTrackingMode:mode animated:animated completion:nil];
+}
+
+
+- (void)setUserTrackingMode:(RMUserTrackingMode)mode animated:(BOOL)animated completion:(void (^)(RMUserTrackingMode trackingMode))completion
+{
     if (mode == _userTrackingMode)
         return;
 
@@ -3320,7 +3326,7 @@
                                      if ([annotation.layer isKindOfClass:[RMMarker class]])
                                          annotation.layer.transform = _annotationTransform;
                              }
-                             completion:nil];
+                             completion:^(BOOL finished) { if(completion) completion(mode); }];
 
             [CATransaction commit];
 
@@ -3365,7 +3371,7 @@
                                      if ([annotation.layer isKindOfClass:[RMMarker class]])
                                          annotation.layer.transform = _annotationTransform;
                              }
-                             completion:nil];
+                             completion:^(BOOL finished) { if(completion) completion(mode); }];
 
             [CATransaction commit];
 
@@ -3406,6 +3412,8 @@
 
             [_locationManager startUpdatingHeading];
 
+            if(completion) completion(mode);
+            
             break;
         }
     }

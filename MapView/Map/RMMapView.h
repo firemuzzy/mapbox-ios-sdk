@@ -523,5 +523,6 @@ typedef enum : NSUInteger {
 *   @param mode The mode used to track the user location. 
 *   @param animated Whether changes to the map center or rotation should be animated when the mode is changed. */
 - (void)setUserTrackingMode:(RMUserTrackingMode)mode animated:(BOOL)animated;
+- (void)setUserTrackingMode:(RMUserTrackingMode)mode animated:(BOOL)animated completion:(void (^)(RMUserTrackingMode trackingMode))completion;
 
 @end
